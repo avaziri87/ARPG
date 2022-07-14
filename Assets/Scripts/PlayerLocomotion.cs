@@ -20,13 +20,15 @@ public class PlayerLocomotion : MonoBehaviour
 
     float _nextFire;
     EnemyLocomotion _currentTarget;
+    Animator _animator;
 
     public EnemyLocomotion CurrentTarget { get => _currentTarget; set => _currentTarget = value; }
 
-    private void Awake()
+    private void Start()
     {
         _inputManager = InputManager.Instance;
         _rigidbody = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
     }
     private void FixedUpdate()
     {
@@ -45,6 +47,14 @@ public class PlayerLocomotion : MonoBehaviour
 
         Vector3 movementVelocity = _moveDirection;
         _rigidbody.velocity = movementVelocity;
+        if(movementVelocity.magnitude > 0)
+        {
+            _animator.SetBool("IsWalking", true);
+        }
+        else
+        {
+            _animator.SetBool("IsWalking", false);
+        }
     }
 
     void HandleRotation()

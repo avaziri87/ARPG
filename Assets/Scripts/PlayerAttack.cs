@@ -37,4 +37,20 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Enemy"))
+        {
+            EnemyLocomotion newEnemyLocomotion = other.GetComponent<EnemyLocomotion>();
+            if(_playerLocomotion.CurrentTarget == newEnemyLocomotion)
+            {
+                GetNewTarget();
+            }
+            else
+            {
+                _enemyPoolList.Remove(newEnemyLocomotion);
+            }
+        }
+    }
 }
